@@ -1,0 +1,49 @@
+.payment-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  direction: rtl;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-box {
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.input-field {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.payment-button {
+  padding: 10px;
+  background-color: #6772e5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}
+
+.payment-success {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+}

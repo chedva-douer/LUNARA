@@ -1,0 +1,11 @@
+.personal-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* מרווח בין הרכיבים */
+}
+
+.personal-section > div {
+  flex: 1;
+  /* אם אתה רוצה לקבוע רוחב קבוע לכל רכיב, תוכל להשתמש ב-width */
+  max-width: 48%; /* לדוגמה, להקצות 48% לכל רכיב */
+}

@@ -1,0 +1,63 @@
+.room-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* כל כרטיס ייראה כעמודה ויתפוס מינימום 300px */
+  gap: 20px; /* רווח בין כרטיסים */
+  padding: 20px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: white;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05); /* כאשר רואים את החדר בתצוגה נרחבת */
+  }
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+}
+
+.details {
+  padding: 10px;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+.room-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+}

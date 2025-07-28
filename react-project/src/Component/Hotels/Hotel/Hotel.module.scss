@@ -1,0 +1,41 @@
+.hotelContainer {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  direction: rtl;
+  text-align: right;
+}
+
+.hotelImage {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.hotelTitle {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.hotelInfo {
+  margin: 6px 0;
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
+}

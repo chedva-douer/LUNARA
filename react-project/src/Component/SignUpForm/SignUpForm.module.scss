@@ -1,0 +1,83 @@
+.SignUp {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem 2.5rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  direction: rtl;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1a1a1a;
+}
+
+.SignUp h2 {
+  text-align: center;
+  font-size: 1.75rem;
+  margin-bottom: 1.2rem;
+  font-weight: 700;
+  color: #004466;
+}
+
+.SignUp > form > div {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.SignUp label {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  font-size: 0.95rem;
+  color: #004466;
+}
+
+.form-control {
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 1.5px solid #b0bec5;
+  transition: border-color 0.25s ease;
+  outline-offset: 2px;
+}
+
+.form-control:focus {
+  border-color: #0077b6;
+  outline: none;
+  box-shadow: 0 0 5px #0077b6;
+}
+
+.text-danger {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px 0;
+  font-weight: 700;
+  border-radius: 16px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 6px 15px rgba(0, 116, 204, 0.4);
+  font-size: 1.1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #0077b6, #00b4d8);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #005f86, #009eb8);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}

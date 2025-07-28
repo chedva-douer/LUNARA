@@ -1,0 +1,219 @@
+.hotel-page {
+  background-color: #f5f5f5;
+  font-family: 'Segoe UI', sans-serif;
+  padding-bottom: 100px; /* עדכון למתן מרווח לפוטר הנמוך */
+}
+
+// ניווט פנימי בתוך העמוד
+.hotel-nav {
+  background-color: #004466;
+  padding: 10px 30px;
+  display: flex;
+  justify-content: center;
+
+  ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+
+    li a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #ffcc00;
+      }
+    }
+  }
+}
+
+.hotel-header {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 30px 15px;
+  margin: 20px auto;
+  border-radius: 12px;
+  max-width: 900px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
+  h1 {
+    font-size: 2rem;
+    color: #004466;
+    margin-bottom: 8px;
+  }
+
+  .hotel-subtitle {
+    font-size: 1.1rem;
+    color: #666666;
+  }
+}
+
+// תמונה ראשית מתחלפת
+.hotel-slider {
+  position: relative;
+  max-width: 900px;
+  margin: 20px auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  .slider-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+    .dot {
+      height: 12px;
+      width: 12px;
+      margin: 0 6px;
+      background-color: #ccc;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &.active {
+        background-color: #004466;
+      }
+    }
+  }
+}
+
+.hotel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 40px auto;
+  padding: 20px;
+  max-width: 1000px;
+
+  .hotel-description {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+
+    h2 {
+      margin-bottom: 15px;
+      color: #004466;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 10px;
+    }
+  }
+
+  .hotel-booking {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+}
+
+.image-gallery {
+  max-width: 1100px; /* רוחב מוגדל */
+  margin: 0 auto;
+  padding: 30px 10px;
+
+  h2 {
+    text-align: center;
+    color: #004466;
+    margin-bottom: 20px;
+  }
+
+  .image-grid {
+    display: flex;
+    flex-wrap: wrap; /* מאפשר שורות חדשות */
+    gap: 12px;
+    justify-content: center;
+
+    img {
+      width: calc(20% - 9.6px); /* 5 תמונות בשורה עם רווח */
+      border-radius: 8px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+  }
+
+  .loading {
+    text-align: center;
+    color: #999;
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+}
+
+.hotel-map {
+  max-width: 1100px; /* הגדלתי */
+  margin: 50px auto;
+  padding: 20px;
+
+  h2 {
+    text-align: center;
+    color: #004466;
+    margin-bottom: 15px;
+  }
+
+  iframe {
+    width: 100%;
+    height: 300px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+}
+
+/* טופס הזמנה דבוק (sticky) לתחתית */
+.hotel-booking {
+  position: fixed;
+  bottom: 0; /* שים אותו ממש בתחתית */
+  left: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10000;
+  height: 12vh; /* גובה משתנה לפי הצורך */
+  padding: 10px 20px; /* הוספת ריווח פנימי */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hotel-booking form {
+  width: 100%; /* הכפתור והתוכן יימתחו לרוחב */
+  max-width: 1200px; /* הגבל את הרוחב המקסימלי */
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.hotel-booking .button {
+  background-color: #2196f3;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+.hotel-booking .button:hover {
+  background-color: #1976d2;
+}
+

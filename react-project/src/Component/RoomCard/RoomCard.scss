@@ -1,0 +1,58 @@
+.room-card {
+  display: flex;
+  flex-direction: row-reverse;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 1rem 0;
+  background-color: #fff;
+  direction: rtl;
+
+  .room-image {
+    width: 35%;
+    object-fit: cover;
+    background-color: #eee;
+  }
+
+  .room-details {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+
+    .room-title {
+      margin-top: 0;
+      font-size: 1.6rem;
+      color: #333;
+    }
+
+    p {
+      margin: 0.4rem 0;
+      font-size: 1rem;
+      color: #444;
+
+      strong {
+        color: #000;
+      }
+    }
+
+    .button {
+      margin-top: 1.2rem;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #005fa3;
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+.edit-user-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+
+  .field-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 0.3rem;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: border-color 0.2s;
+
+      &:read-only {
+        background-color: #eee;
+        border-color: #ddd;
+        cursor: not-allowed;
+      }
+
+      &:not(:read-only):focus {
+        border-color: #007bff;
+        outline: none;
+      }
+    }
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+
+    .edit-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .save-btn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .cancel-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+  }
+}
