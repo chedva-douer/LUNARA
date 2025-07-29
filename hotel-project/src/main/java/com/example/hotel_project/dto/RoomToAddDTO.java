@@ -3,7 +3,7 @@ import lombok.Data;
 @Data
 public class RoomToAddDTO {
     private int roomId;
-    private int roomTypId;
+    private int roomTypeId;
     private String roomNumber;
     private String roomPrice;
     private int hotelId;

@@ -40,4 +40,10 @@ public class HotelServiceImpl implements HotelService {
                 .orElseThrow(() -> new RuntimeException("Hotel with id " + id + " not found."));
     }
 
+    @Override
+    public Hotel findById(int id) {
+        return rep_hotel.findById(id)
+                .orElseThrow(() -> new RuntimeException("Hotel with id " + id + " not found."));    
+    }
+
 }

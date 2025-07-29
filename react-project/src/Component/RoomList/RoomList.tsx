@@ -23,7 +23,7 @@ const RoomList: React.FC<Props> = ({ hotelId, roomsList,checkInDate,checkOutDate
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
-    console.log(roomsList)
+    console.log('roomsList', roomsList);
     if (roomsList) {
       setRooms(roomsList);
       setLoading(false);
@@ -66,7 +66,7 @@ const RoomList: React.FC<Props> = ({ hotelId, roomsList,checkInDate,checkOutDate
     }
     navigate('/payment', {
       state: {
-        roomId: room.roomNumber ?? null,
+        roomId: room.roomId ?? null,
         userId: user.id,
         checkInDate,
         checkOutDate,
@@ -83,7 +83,7 @@ const RoomList: React.FC<Props> = ({ hotelId, roomsList,checkInDate,checkOutDate
     <div className="room-list-container">
       {Array.isArray(rooms) && rooms.map((room) => (
         <RoomCard
-          key={room.roomNumber}
+          key={room.roomId}
           room={room}
           onOrder={onRoomClick ? () => onRoomClick(room) : handleOrder}
         />

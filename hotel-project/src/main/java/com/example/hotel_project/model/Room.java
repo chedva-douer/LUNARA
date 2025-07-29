@@ -20,8 +20,6 @@ public class Room {
     @GeneratedValue
     private int roomId;
 
-    // הסר את השדה int roomType
-
     @ManyToOne
     @JoinColumn(name = "roomType", referencedColumnName = "typeId")
     @JsonBackReference

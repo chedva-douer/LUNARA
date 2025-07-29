@@ -21,5 +21,6 @@ public interface RoomRepository extends CrudRepository<Room, Integer> {
   List<Room> findAllByRoomNumber(String id);
 
   boolean existsByRoomNumber(String roomId);
+  
 
 }

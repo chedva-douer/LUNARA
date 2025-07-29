@@ -3,7 +3,7 @@ package com.example.hotel_project.controller;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
+// import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMapping;  
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.hotel_project.dto.RoomToAddDTO;
 import com.example.hotel_project.dto.RoomToShowDTO;
+import com.example.hotel_project.mapper.RoomAddMapper;
+import com.example.hotel_project.mapper.RoomMapper;
 import com.example.hotel_project.model.Room;
+import com.example.hotel_project.service.HotelService;
 import com.example.hotel_project.service.RoomService;
+import com.example.hotel_project.service.RoomTypeService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -27,9 +31,13 @@ import com.example.hotel_project.service.RoomService;
 public class RoomController {
     @Autowired
     private RoomService rService;
-
     @Autowired
-    private ModelMapper mapper;
+    private HotelService hotelService;
+    @Autowired
+    private RoomTypeService roomTypeService;
+
+    // @Autowired
+    // private ModelMapper mapper;
 
     @GetMapping("/search")
     public ResponseEntity<?> searchSuitableRoom(
@@ -48,11 +56,11 @@ public class RoomController {
                         .body("No rooms found for the given criteria");
             }
 
-            List<RoomToShowDTO> dtoList = rooms.stream()
-                    .map(room -> mapper.map(room, RoomToShowDTO.class))
+            List<RoomToShowDTO> roomDTOs = rooms.stream()
+                    .map(RoomMapper::toDTO)
                     .toList();
 
-            return ResponseEntity.ok(dtoList);
+            return ResponseEntity.ok(roomDTOs);
 
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -61,14 +69,11 @@ public class RoomController {
     }
 
     @PostMapping("/addRoom")
-    public ResponseEntity<String> addRoom(@RequestBody RoomToAddDTO roomDto) {
-        try {
-            Room room = mapper.map(roomDto, Room.class);
-            rService.addRoom(room, roomDto.getHotelId());
-            return ResponseEntity.status(HttpStatus.CREATED).body("Room added successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<?> addRoom(@RequestBody RoomToAddDTO dto) {
+        RoomAddMapper mapper = new RoomAddMapper(roomTypeService, hotelService);
+        Room room = mapper.toEntity(dto);
+        rService.addRoom(room,dto.getHotelId());
+        return ResponseEntity.ok("Room added successfully");
     }
 
     @GetMapping("/by-hotel/{hotelId}")
@@ -77,10 +82,10 @@ public class RoomController {
         if (rooms.isEmpty()) {
             throw new RuntimeException("No rooms found for the specified hotel ID");
         }
-        List<RoomToShowDTO> roomDTO = rooms.stream()
-                .map(room -> mapper.map(room, RoomToShowDTO.class))
+        List<RoomToShowDTO> roomDTOs = rooms.stream()
+                .map(RoomMapper::toDTO)
                 .toList();
-        return roomDTO;
+        return roomDTOs;
     }
 
     @GetMapping("/{DateCheck}")

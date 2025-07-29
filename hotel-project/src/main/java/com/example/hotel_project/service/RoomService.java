@@ -12,8 +12,6 @@ public interface RoomService {
 
     public boolean DateCheck(int roomId, LocalDate checkInDate, LocalDate checkOutDate);
 
-    // public List<Room> findAllById(int id);
-
     public List<Room> findAllByHotelId(int hotelId);
     
     public List<Room> findAll();

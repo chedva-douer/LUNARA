@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+        direction: rtl;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 30px;
+        max-width: 600px;
+        margin: auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        color: #2e7d32;
+      }
+      .details {
+        margin-top: 20px;
+        border-top: 1px solid #ddd;
+        padding-top: 15px;
+        line-height: 1.8;
+      }
+      .footer {
+        margin-top: 30px;
+        font-size: 14px;
+        color: #555;
+      }
+    </style>
+      <div class="header" style="text-align: center; margin-bottom: 20px;">
+    <img src="https://drive.google.com/uc?export=view&id=1apTGo5Mvev9mHxv1laMU_7LasRvl5eJV" alt="לוגו המלון" style="max-height: 80px;" />
+    <h1 style="margin: 10px 0 0; font-size: 24px; color: #2e377d;">LUNARA </h1>
+  </div>
+  </head>
+  <body>
+    <div class="container">
+      <h2>שלום ${userName},</h2>
+      <p>ההזמנה שלך אושרה בהצלחה!</p>
+
+      <div class="details">
+        <p><strong>פרטי ההזמנה:</strong></p>
+        <p>🛏 חדר: ${roomId}</p>
+        <p>📅 תאריך כניסה: ${checkInDate}</p>
+        <p>📅 תאריך יציאה: ${checkOutDate}</p>
+        <p>💳 סכום: ₪${amount}</p>
+      </div>
+
+      <div class="footer">
+        <p>תודה שבחרת בנו 💚</p>
+        <p>נשמח לראותך בקרוב!</p>
+      </div>
+    </div>
+  </body>
+</html>

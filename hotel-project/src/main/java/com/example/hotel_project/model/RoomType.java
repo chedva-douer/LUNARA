@@ -21,7 +21,7 @@ public class RoomType {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "roomType")  // חייב להתאים לשם השדה במחלקת Room
+    @OneToMany(mappedBy = "roomType") 
     @JsonManagedReference
     private List<Room> rooms; 
 }

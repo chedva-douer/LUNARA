@@ -17,7 +17,6 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import HotelPage from './Component/Hotels/HotelPage/HotelPage';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import OrderForm from './Component/OrderForm/OrderForm';
 
 const clientId = '318066376948-l2satljm6u72d1v3duj9c8fo81immhll.apps.googleusercontent.com';
 
@@ -30,6 +29,8 @@ const CreditCardPaymentFromLocation: React.FC = () => {
   const { roomId, userId, checkInDate, checkOutDate, amount } = location.state || {};
 
   useEffect(() => {
+    console.log('CreditCardPaymentFromLocation mounted with state:', location.state);
+    console.log('roomId:', roomId, 'userId:', userId, 'checkInDate:', checkInDate, 'checkOutDate:', checkOutDate, 'amount:', amount);
     if (!roomId || !userId || !checkInDate || !checkOutDate || !amount) {
       navigate('/');
     }
@@ -46,7 +47,7 @@ function App() {
 
     <div className="App">
       <GoogleOAuthProvider clientId={clientId}>
-        <ToastContainer />
+        <ToastContainer autoClose={1500}/>
         <BrowserRouter>
           <div className="App">
             <Routes>

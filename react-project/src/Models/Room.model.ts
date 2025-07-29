@@ -1,9 +1,7 @@
 export interface Room {
   roomId: number;
-  roomTyp: string;
-  roomTypy?: {
-    typeName: string;
-  };
+  RoomTypeDescription: string;
+
   roomNumber: string;
   roomPrice: string;
   adultCount: number;

@@ -22,9 +22,12 @@ public class OrderController {
 
     @PostMapping("/addOrder")
     public ResponseEntity<Order> addOrder(
+        
             @RequestBody OrderDTO orderDto) {
+                System.out.println("Received orderDto: " + orderDto);
+
         try {
-            if (orderDto.getRoomId()==0|| orderDto.getCheckInDate() == null || orderDto.getCheckOutDate() == null
+            if ( orderDto.getCheckInDate() == null || orderDto.getCheckOutDate() == null
                     || orderDto.getUserId() <= 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }

@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> 
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>hotel-project</artifactId>
@@ -30,6 +30,26 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
+	<!-- שליחת מיילים (JavaMail) -->
+<dependency>
+    <groupId>com.sun.mail</groupId>
+    <artifactId>jakarta.mail</artifactId>
+    <version>2.0.1</version>
+</dependency>
+
+<!-- יצירת קבצי PDF -->
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itextpdf</artifactId>
+    <version>5.5.13.3</version>
+</dependency>
+
+<dependency>
+    <groupId>jakarta.activation</groupId>
+    <artifactId>jakarta.activation-api</artifactId>
+    <version>2.0.1</version>
+</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>

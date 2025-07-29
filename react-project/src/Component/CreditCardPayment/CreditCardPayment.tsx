@@ -46,7 +46,6 @@ const CreditCardPayment: React.FC<CreditCardPaymentProps> = () => {
       .required('חובה לבחור מספר תשלומים')
       .oneOf([1, 2, 3, 6, 12], 'מספר תשלומים לא תקף'),
   });
-  console.log('createOrder called', { roomId, userId, checkInDate, checkOutDate });
 
   const createOrder = async () => {
     try {
@@ -56,7 +55,7 @@ const CreditCardPayment: React.FC<CreditCardPaymentProps> = () => {
         body: JSON.stringify({
           roomId,
           userId,
-          checkInDate: new Date(checkInDate).toISOString().split('T')[0], 
+          checkInDate: new Date(checkInDate).toISOString().split('T')[0],
           checkOutDate: new Date(checkOutDate).toISOString().split('T')[0],
         }),
       });
@@ -64,27 +63,31 @@ const CreditCardPayment: React.FC<CreditCardPaymentProps> = () => {
         throw new Error('בעיה ביצירת ההזמנה');
       }
       else {
-      const newOrder = await response.json();
-      //  const order: Order = {
-      //   roomId: newOrder.room.roomId,
-      //   userId: newOrder.userId,
-      //   checkInDate: new Date(newOrder.checkInDate),
-      //   checkOutDate: new Date(newOrder.checkOutDate),
-      // };
-      dispatch(addOrder(newOrder));
-      console.log("הזמנה שחזרה מהשרת ונשלחה לרידאקס", newOrder);
-      console.log("הזמנה שנשלפה מרידקאס", user?.orders);
-      toast.success('ההזמנה נוצרה בהצלחה!');
-      setPaymentSuccess(true);
-      await fetch('http://localhost:8080/mail/sendOK', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        recipientEmail: user?.userEmail,
-messageText: `שלום ${user?.userName || ''},\n\nההזמנה שלך אושרה בהצלחה!\n\nפרטי הזמנה:\nחדר: ${roomId}\nתאריך כניסה: ${new Date(checkInDate).toLocaleDateString('he-IL')}\nתאריך יציאה: ${new Date(checkOutDate).toLocaleDateString('he-IL')}\nסכום: ₪${amount.toFixed(2)}\n\nתודה שבחרת בנו.`,      }),
-    });
-
-}
+        const newOrder = await response.json();
+        //  const order: Order = {
+        //   roomId: newOrder.room.roomId,
+        //   userId: newOrder.userId,
+        //   checkInDate: new Date(newOrder.checkInDate),
+        //   checkOutDate: new Date(newOrder.checkOutDate),
+        // };
+        dispatch(addOrder(newOrder));
+        console.log("הזמנה שחזרה מהשרת ונשלחה לרידאקס", newOrder);
+        console.log("הזמנה שנשלפה מרידקאס", user?.orders);
+        toast.success('ההזמנה נוצרה בהצלחה!');
+        setPaymentSuccess(true);
+        await fetch('http://localhost:8080/mail/sendOK', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            recipientEmail: user?.userEmail,
+            userName: user?.userName,
+            roomId: roomId,
+            checkInDate: new Date(checkInDate).toISOString().split('T')[0],
+            checkOutDate: new Date(checkOutDate).toISOString().split('T')[0],
+            amount: Number(amount.toFixed(2))
+          })
+        });
+      }
     } catch (err: any) {
       toast.error(err.message || 'שגיאה ביצירת ההזמנה');
     }
