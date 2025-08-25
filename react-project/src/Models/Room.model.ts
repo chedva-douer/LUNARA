@@ -1,6 +1,6 @@
 export interface Room {
   roomId: number;
-  RoomTypeDescription: string;
+  roomTypeDescription: string;
 
   roomNumber: string;
   roomPrice: string;

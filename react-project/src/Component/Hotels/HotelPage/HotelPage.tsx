@@ -8,32 +8,18 @@ import RoomList from '../../RoomList/RoomList';
 import { Room } from '../../../Models/Room.model';
 import { useParams } from 'react-router-dom';
 
-const TOTAL_IMAGES = 65;
-const IMAGES_PER_LOAD = 10;
-
-
-const generateImages = (start: number, count: number) => {
-  const end = Math.min(start + count - 1, TOTAL_IMAGES);
-  return Array.from({ length: end - start + 1 }, (_, idx) => ({
-    id: start + idx,
-    url: `/תמונות/image${start + idx}.jpg`,
-  }));
-};
-
 const HotelPage: React.FC = () => {
   const { hotelId } = useParams<{ hotelId: string }>();
   const [roomsFromSearch, setRoomsFromSearch] = useState<Room[]>([]);
-  const [images, setImages] = useState(() => generateImages(1, 20));
+  const [images, setImages] = useState<{ id: number; url: string }[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const loaderRef = useRef<HTMLDivElement | null>(null);
   const [hotelData, setHotelData] = useState<IHotel | null>(null);
   const [selectedDates, setSelectedDates] = useState<{ startDate: Date | null, endDate: Date | null }>({
     startDate: null,
     endDate: null,
   });
-  // קריאת הנתונים של המלון מהשרת
+
+  // קריאת נתוני המלון
   useEffect(() => {
     axios.get(`http://localhost:8080/hotels/getHotelById`, {
       params: {
@@ -43,6 +29,22 @@ const HotelPage: React.FC = () => {
       .then((response) => {
         const hotelData = response.data;
         setHotelData(hotelData);
+
+        // --- פענוח imagesUrl ---
+        if (hotelData.imagesUrl && hotelData.imagesUrl.length > 0) {
+          try {
+            const parsedImageNumbers = JSON.parse(hotelData.imagesUrl[0]); // מחרוזת -> מערך מספרים
+            if (Array.isArray(parsedImageNumbers)) {
+              const mappedImages = parsedImageNumbers.map((num: number, idx: number) => ({
+                id: idx + 1,
+                url: `/תמונות/image${num}.jpg`,
+              }));
+              setImages(mappedImages);
+            }
+          } catch (err) {
+            console.error('שגיאה בפענוח imagesUrl:', err);
+          }
+        }
       })
       .catch((err) => {
         console.error('שגיאה בטעינת נתוני המלון:', err);
@@ -50,47 +52,24 @@ const HotelPage: React.FC = () => {
   }, [hotelId]);
 
   useEffect(() => {
+    if (images.length > 0) {
+      setCurrentIndex(0); // רק אחרי שהתמונות נטענו
+    }
+  }, [images]);
+  // סליידר אוטומטי
+  useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % Math.min(images.length, 5));
     }, 4000);
     return () => clearInterval(timer);
   }, [images]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting && !isLoadingMore && hasMore) {
-          setIsLoadingMore(true);
-          setTimeout(() => {
-            setImages((prev) => {
-              const newImages = generateImages(prev.length + 1, IMAGES_PER_LOAD);
-              const updatedImages = [...prev, ...newImages];
-              if (updatedImages.length >= TOTAL_IMAGES) {
-                setHasMore(false);
-              }
-              return updatedImages;
-            });
-            setIsLoadingMore(false);
-          }, 500);
-        }
-      },
-      { threshold: 1.0 }
-    );
-
-    const loader = loaderRef.current;
-    if (loader) observer.observe(loader);
-    return () => {
-      if (loader) observer.unobserve(loader);
-    };
-  }, [isLoadingMore, hasMore]);
-
   return (
     <div className="hotel-page">
       <Header />
 
       {roomsFromSearch.length > 0 ? (
-        <RoomList roomsList={roomsFromSearch} checkInDate={selectedDates.startDate} checkOutDate={selectedDates.endDate}/>
+        <RoomList roomsList={roomsFromSearch} checkInDate={selectedDates.startDate} checkOutDate={selectedDates.endDate} />
       ) : (
         <>
           <header>
@@ -112,25 +91,29 @@ const HotelPage: React.FC = () => {
           </header>
 
           <section className="hotel-slider">
-            <img
-              key={images[currentIndex]?.id}
-              src={images[currentIndex]?.url}
-              alt={`תמונה ${currentIndex + 1}`}
-              className="slider-image"
-            />
-            <div className="dots">
-              {images.slice(0, 5).map((_, idx) => (
-                <span
-                  key={idx}
-                  className={`dot ${currentIndex === idx ? 'active' : ''}`}
-                  onClick={() => setCurrentIndex(idx)}
-                  aria-label={`בחר תמונה ${idx + 1}`}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => e.key === 'Enter' && setCurrentIndex(idx)}
+            {images.length > 0 && (
+              <>
+                <img
+                  key={images[currentIndex]?.id}
+                  src={images[currentIndex]?.url}
+                  alt={`תמונה ${currentIndex + 1}`}
+                  className="slider-image"
                 />
-              ))}
-            </div>
+                <div className="dots">
+                  {images.slice(0, 5).map((_, idx) => (
+                    <span
+                      key={idx}
+                      className={`dot ${currentIndex === idx ? 'active' : ''}`}
+                      onClick={() => setCurrentIndex(idx)}
+                      aria-label={`בחר תמונה ${idx + 1}`}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => e.key === 'Enter' && setCurrentIndex(idx)}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </section>
 
           <section id="booking" className="hotel-info">
@@ -151,11 +134,6 @@ const HotelPage: React.FC = () => {
                 <img key={img.id} src={img.url} alt={`תמונה ${img.id}`} />
               ))}
             </div>
-            {hasMore && (
-              <div ref={loaderRef} className="loading">
-                טוען עוד...
-              </div>
-            )}
           </section>
 
           <section id="map" className="hotel-map">
@@ -182,13 +160,12 @@ const HotelPage: React.FC = () => {
       )}
 
       <div className="hotel-booking">
-        <OrderForm 
+        <OrderForm
           onRoomsFound={setRoomsFromSearch}
           selectedDates={selectedDates}
           setSelectedDates={setSelectedDates} />
       </div>
     </div>
-
   );
 };
 

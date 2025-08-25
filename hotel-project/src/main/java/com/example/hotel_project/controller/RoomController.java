@@ -102,4 +102,13 @@ public class RoomController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+   @PostMapping("/changeImageUrl")
+    public ResponseEntity<String> changeImageUrl(@RequestParam int roomId, @RequestParam String imageUrl) {
+        try {
+            rService.changeImageUrl(roomId, imageUrl);
+            return ResponseEntity.ok("Room update successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

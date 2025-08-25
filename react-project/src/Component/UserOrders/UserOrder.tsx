@@ -7,13 +7,19 @@ const UserOrder: React.FC = () => {
   const [orders, setOrders] = useState(user?.orders || []);
 
   useEffect(() => {
-    console.log(user)
-    console.log(user?.orders)
-    user?.orders?.forEach((o, i) => {
-      console.log(`Order ${i}:`, o);
-    });
     setOrders(user?.orders || []);
   }, [user?.orders]);
+
+  const isPastOrder = (checkOutDate?: string | Date) => {
+    if (!checkOutDate) return false;
+    const today = new Date();
+
+    const outDate = typeof checkOutDate === 'string'
+      ? new Date(checkOutDate)
+      : checkOutDate;
+
+    return outDate < today;
+  };
 
   return (
     <div style={styles.container}>
@@ -22,21 +28,45 @@ const UserOrder: React.FC = () => {
         <p style={styles.noOrders}>אין הזמנות להצגה</p>
       ) : (
         <ul style={styles.list}>
-          {orders.map((order, index) => (
-            <li key={index} style={styles.listItem}>
-              <div style={styles.rooms}>
-                <strong>חדרים:</strong>
-                {order.rooms && order.rooms.length > 0
-                  ? order.rooms.map((room, i) => (
-                    <span key={i}>{room.roomNumber ?? 'לא ידוע'}</span>
-                  ))
-                  : 'לא זמין'}             </div>
-              <div style={styles.dateRow}>
-                <span><strong>תאריך כניסה:</strong> {order.checkInDate ? new Date(order.checkInDate).toLocaleDateString('he-IL') : 'לא זמין'}</span>
-                <span><strong>תאריך יציאה:</strong> {order.checkOutDate ? new Date(order.checkOutDate).toLocaleDateString('he-IL') : 'לא זמין'}</span>
-              </div>
-            </li>
-          ))}
+          {orders.map((order, index) => {
+
+            const isPast = isPastOrder(order.checkOutDate);
+            const listItemStyle = {
+              ...styles.listItem,
+              backgroundColor: isPast ? '#f0f0f0' : '#e0f7fa',
+              borderRight: isPast ? '6px solid #ccc' : '6px solid #26c6da',
+            };
+
+            return (
+              <li key={index} style={listItemStyle}>
+                <div style={styles.rooms}>
+                  <strong>חדרים:</strong>{' '}
+                  {order.rooms && order.rooms.length > 0
+                    ? order.rooms.map((room, i) => (
+                      <span key={i}>{room.roomNumber ?? 'לא ידוע'} </span>
+                    ))
+                    : 'לא זמין'}
+                </div>
+                <div style={styles.dateRow}>
+                  <span>
+                    <strong>תאריך כניסה:</strong>{' '}
+                    {order.checkInDate
+                      ? new Date(order.checkInDate).toLocaleDateString('he-IL')
+                      : 'לא זמין'}
+                  </span>
+                  <span>
+                    <strong>תאריך יציאה:</strong>{' '}
+                    {order.checkOutDate
+                      ? new Date(order.checkOutDate).toLocaleDateString('he-IL')
+                      : 'לא זמין'}
+                  </span>
+                </div>
+                <div style={{ fontWeight: 'bold', color: isPast ? '#999' : '#00796b' }}>
+                  {isPast ? 'ההזמנה הסתיימה' : 'הזמנה עתידית'}
+                </div>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
@@ -52,7 +82,7 @@ const styles = {
     borderRadius: 8,
     boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
     fontFamily: 'Arial, sans-serif',
-    direction: 'rtl' as const, // חשוב בשביל עברית
+    direction: 'rtl' as const,
   },
   title: {
     textAlign: 'center' as const,
@@ -70,14 +100,13 @@ const styles = {
     margin: 0,
   },
   listItem: {
-    backgroundColor: 'white',
     borderRadius: 6,
     padding: 15,
     marginBottom: 15,
-    boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
     display: 'flex',
     flexDirection: 'column' as const,
     gap: 10,
+    transition: 'all 0.3s ease-in-out',
   },
   rooms: {
     fontSize: 16,

@@ -64,12 +64,6 @@ const CreditCardPayment: React.FC<CreditCardPaymentProps> = () => {
       }
       else {
         const newOrder = await response.json();
-        //  const order: Order = {
-        //   roomId: newOrder.room.roomId,
-        //   userId: newOrder.userId,
-        //   checkInDate: new Date(newOrder.checkInDate),
-        //   checkOutDate: new Date(newOrder.checkOutDate),
-        // };
         dispatch(addOrder(newOrder));
         console.log("הזמנה שחזרה מהשרת ונשלחה לרידאקס", newOrder);
         console.log("הזמנה שנשלפה מרידקאס", user?.orders);
@@ -87,8 +81,10 @@ const CreditCardPayment: React.FC<CreditCardPaymentProps> = () => {
             amount: Number(amount.toFixed(2))
           })
         });
+            setPaymentSuccess(true);
       }
     } catch (err: any) {
+       setPaymentSuccess(false);
       toast.error(err.message || 'שגיאה ביצירת ההזמנה');
     }
   };
@@ -109,7 +105,6 @@ const CreditCardPayment: React.FC<CreditCardPaymentProps> = () => {
       // כאן תשלבי תשלום אמיתי עם Stripe בעתיד
       await new Promise(res => setTimeout(res, 1000)); // הדמיה
 
-      setPaymentSuccess(true);
       resetForm();
 
       await createOrder();
